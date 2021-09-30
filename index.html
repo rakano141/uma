@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>ウマ娘シミュレーター</title>
+	<meta content="ウマ娘のコース毎必要スタミナ量を計算します。" name="description">
+	<meta name="keywords" content="ウマ娘,スタミナ,チェッカー,計算,シミュレータ">
+	<meta name="subject" content="ウマ娘のコース毎必要スタミナ量などを計算します。" />
+	<meta property="og:title" content="ウマ娘シミュレーター／スタミナ計算" >
+	<meta property="og:url" content="/" >
+	<meta property="og:site_name" content="" >
+	<meta property="og:image" content="image/skill_heal_unique.png" />
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	<div id="contents">
+		<div id="display_main">
+			<div id="setting">
+				<div id="status">
+					<div id="speed" class="stbox">
+						<div class="status_title">スピード</div>
+						<div><input type="number" class="status_input" pattern="\d*" value="800" min="1" max="2000"></div>
+					</div>
+					<div id="stamina" class="status_br">
+						<div class="status_title">スタミナ</div>
+						<div><input type="number" class="status_input" pattern="\d*" value="800" min="1" max="2000"></div>
+					</div>
+					<div id="power" class="status_br">
+						<div class="status_title">パワー</div>
+						<div><input type="number" class="status_input" pattern="\d*" value="800" min="1" max="2000"></div>
+					</div>
+					<div id="guts" class="status_br">
+						<div class="status_title">根性</div>
+						<div><input type="number" class="status_input" pattern="\d*" value="800" min="1" max="2000"></div>
+					</div>
+					<div id="int" class="status_br">
+						<div class="status_title">賢さ</div>
+						<div><input type="number" class="status_input" pattern="\d*" value="800" min="1" max="2000"></div>
+					</div>
+				</div>
+				<input type="number" id="motivation" pattern="\d*" value="2" hidden />
+				<div id="raceSetting">
+					<div id="" class="raceSetting">
+						<div class="raceSetting_inner">
+							<div class="raceSetting_title">レース場</div>
+							<div class="raceSetting_select">
+								<select id="raceSetting_course_list">
+									<option value="-1">レース場</option>
+									<option value="0">札幌</option>
+									<option value="1">函館</option>
+									<option value="2">新潟(直/内)</option>
+									<option value="3">新潟(外)</option>
+									<option value="4">福島</option>
+									<option value="5">中山</option>
+									<option value="6">東京</option>
+									<option value="7">中京</option>
+									<option value="8">京都</option>
+									<option value="9">阪神(内)</option>
+									<option value="10">阪神(外)</option>
+									<option value="11">小倉</option>
+									<option value="12">カスタム</option>
+								</select>
+								<select id="raceSetting_course_baba">
+									<option value="-1">バ場</option>
+									<option value="0">芝</option>
+									<option value="1">ダート</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div id="babaStyle" class="raceSetting">
+						<div class="raceSetting_inner">
+							<div class="raceSetting_title">バ場</div>
+							<div class="raceSetting_select">
+								<select id="baba_joutai">
+									<option value="0">良</option>
+									<option value="1">稍重</option>
+									<option value="2">重</option>
+									<option value="3">不良</option>
+								</select>
+								<select id="baba_num">
+									<option value="0">S</option>
+									<option value="1" selected>A</option>
+									<option value="2">B</option>
+									<option value="3">C</option>
+									<option value="4">D</option>
+									<option value="5">E</option>
+									<option value="6">F</option>
+									<option value="7">G</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div id="dist" class="raceSetting">
+						<div class="raceSetting_inner">
+							<div class="raceSetting_title">距離</div>
+							<div class="raceSetting_select">
+								<select id="raceCourseDist_select">
+									<option value="-1">距離</option>
+								</select>
+								<select id="dist_num">
+									<option value="0">S</option>
+									<option value="1" selected>A</option>
+									<option value="2">B</option>
+									<option value="3">C</option>
+									<option value="4">D</option>
+									<option value="5">E</option>
+									<option value="6">F</option>
+									<option value="7">G</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div id="run" class="raceSetting">
+						<div class="raceSetting_inner">
+							<div class="raceSetting_title">脚質</div>
+							<div class="raceSetting_select">
+								<select id="run_type">
+									<option value="0">逃げ</option>
+									<option value="1">先行</option>
+									<option value="2">差し</option>
+									<option value="3">追込</option>
+								</select>
+								<select id="run_num">
+									<option value="0">S</option>
+									<option value="1" selected>A</option>
+									<option value="2">B</option>
+									<option value="3">C</option>
+									<option value="4">D</option>
+									<option value="5">E</option>
+									<option value="6">F</option>
+									<option value="7">G</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="buttonList">
+				<a id="button_run">出走</a>
+				<a id="button_log" style="display:none;">レースログ</a>
+				<a id="button_detail">詳細設定</a>
+				<a id="button_skill">スキル設定</a>
+				<div id="log">
+					<textarea id="textarea_log">
+						レースのログが表示されます
+					</textarea>
+				</div>
+			</div>
+			<div id="result">
+				<div id="resultData">
+					<div class="resultData_content">
+						<div class="resultData_title">スキル発動率</div>
+						<div id="resultData_skill"></div>
+					</div>
+					<div class="resultData_content">
+						<div class="resultData_title">掛かり率</div>
+						<div id="resultData_kakari"></div>
+					</div>
+					<div class="resultData_content">
+						<div class="resultData_title">速度乱数</div>
+						<div id="resultData_speedRandom"></div>
+					</div>
+				</div>
+				<div id="resultList">
+				</div>
+				<div id="resultOrigin" class="resultbox">
+					<div class="result_title">
+						<div class="result_distance_type"></div>
+						<div class="result_distance_length"></div>
+					</div>
+					<div class="resultList_wrap" style="">
+						<div class="result_content result_border_right">
+							<div class="result_content_title">必要ｽﾀﾐﾅ</div>
+							<div class="resultneedsta result_nai"></div>
+						</div>
+						<div class="result_content result_border_right">
+							<div class="result_content_title">ｽﾊﾟｰﾄ位置</div>
+							<div class="resultspurtdist result_nai"></div>
+						</div>
+						<div class="result_content result_border_right">
+							<div class="result_content_title">ｽﾊﾟｰﾄ速度</div>
+							<div class="resultspurtspd result_nai"></div>
+						</div>
+						<div class="result_content">
+							<div class="result_content_title">表示時間</div>
+							<div class="resulttime result_nai"></div>
+						</div>
+						<div class="result_content result_border_right">
+							<div class="result_content_title">白回復量</div>
+							<div class="resultsirosta result_nai"></div>
+						</div>
+						<div class="result_content result_border_right">
+							<div class="result_content_title">金回復量</div>
+							<div class="resultkinsta result_nai"></div>
+						</div>
+						<div class="result_content result_border_right">
+							<div class="result_content_title">焦り/牽制</div>
+							<div class="resultakasta1 result_nai"></div>
+						</div>
+						<div class="result_content">
+							<div class="result_content_title">八方睨み</div>
+							<div class="resultakasta2 result_nai"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="canvasList">
+				<div id="canvasListSet" style="display:flex">
+					<div id="courseGraphSelect" class="canvasList canvasChecked">
+						レースグラフ
+					</div>
+					<div id="saveCanvas">
+						保存する
+					</div>
+				</div>
+				<div id="canvasBox">
+					<canvas id="raceCanvas" style="width:100%"></canvas>
+				</div>
+			</div>
+			<div id="textContent">
+			</div>
+		</div>
+		<div id="display_skill">
+			<div id="skill">
+				<div id="skill_title">スキル設定</div>
+				<div id="skillTab">
+					<div class="skillTab_list skillTab_list_check">速度</div>
+					<div class="skillTab_list ">加速</div>
+					<div class="skillTab_list ">回復</div>
+					<div class="skillTab_list ">固有</div>
+				</div>
+				<div id="skillList">
+					<div id="skillSpeed" class="skillList checked"></div>
+					<div id="skillAccel" class="skillList"></div>
+					<div id="skillHeal" class="skillList"></div>
+					<div id="skillUnique" class="skillList"></div>
+					<div>
+						スキル関連はまだ調整してないで動かんかもしれん
+					</div>
+				</div>
+				<div style="text-align: center"><a id="button_skill_close" class="skill_button">×</a></div>
+			</div>
+		</div>
+		<div id="display_detail">
+			<div id="detailSetting">
+				<div id="detailSetting_title">詳細設定</div>
+				<div><a id="button_detail_close" class="">×</a></div>
+				<div id="detailSetting_motivation" class="detailSetting">
+					<div class="detailSetting_inner">
+						<div class="detailSetting_title">やる気</div>
+						<div class="detailSetting_select">
+							<label><input type="radio" name="detailSetting_motivation" />絶不調</label>
+							<label><input type="radio" name="detailSetting_motivation" />不調</label>
+							<label><input type="radio" name="detailSetting_motivation" checked/>普通</label>
+							<label><input type="radio" name="detailSetting_motivation" />好調</label>
+							<label><input type="radio" name="detailSetting_motivation" />絶好調</label>
+						</div>
+					</div>
+				</div>
+				<div class="detailSetting">
+					<div class="detailSetting_inner">
+						<div class="detailSetting_title">スキル発動率</div>
+						<div class="detailSetting_select">
+							<label><input type="radio" name="detailSetting_skillCheck" checked/>確定発動</label>
+							<label><input type="radio" name="detailSetting_skillCheck" />賢さ発動</label>
+						</div>
+					</div>
+				</div>
+				<div class="detailSetting">
+					<div class="detailSetting_inner">
+						<div class="detailSetting_title">出遅れ</div>
+						<div class="detailSetting_select">
+							<label><input type="radio" name="detailSetting_startDelay" checked/>0秒</label>
+							<label><input type="radio" name="detailSetting_startDelay" />ランダム</label>
+							<label><input type="radio" name="detailSetting_startDelay" />0.1秒</label>
+						</div>
+					</div>
+				</div>
+				<div class="detailSetting">
+					<div class="detailSetting_inner">
+						<div class="detailSetting_title">速度乱数</div>
+						<div class="detailSetting_select">
+							<label><input type="radio" name="detailSetting_randomSpeed" checked/>ON</label>
+							<label><input type="radio" name="detailSetting_randomSpeed" />OFF</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				ポジションキープ追加予定
+			</div>
+		</div>
+	</div>
+</body>
+</html>
